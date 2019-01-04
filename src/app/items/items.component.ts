@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { State } from '@progress/kendo-data-query';
 import { CategoriesService } from '../service/northwind.service';
 import { Observable } from 'rxjs/Observable';
@@ -6,11 +6,16 @@ import {
   GridDataResult,
   DataStateChangeEvent
 } from '@progress/kendo-angular-grid';
+import { ItemService } from '../service/item.service';
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
 })
+/**
+ * skip = page
+ * size = take
+ */
 export class ItemsComponent implements OnInit {
   ngOnInit() {
   }
@@ -20,7 +25,7 @@ export class ItemsComponent implements OnInit {
       take: 5
   };
 
-  constructor(private service: CategoriesService) {
+  constructor(@Inject('ItemService')private service: ItemService) {
       this.view = service;
       this.service.query(this.state);
   }
