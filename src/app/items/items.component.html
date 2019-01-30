@@ -9,10 +9,22 @@
   [pageable]="true"
   [scrollable]="'none'"
   (dataStateChange)="dataStateChange($event)"
+  (edit)="editItemHandler($event)" (remove)="removeItemHandler($event)"
+  (add)="addItemHandler()"
 >
-<kendo-grid-column field="summary" width="130"></kendo-grid-column>
-<kendo-grid-column field="description" width="200"></kendo-grid-column>
-<kendo-grid-column field="price" [sortable]="false">
-</kendo-grid-column>
+  <kendo-grid-column field="summary" title="Summary" width="130"></kendo-grid-column>
+  <kendo-grid-column field="description" title="Description" width="200"></kendo-grid-column>
+  <kendo-grid-column field="price" title="Price" [sortable]="false"></kendo-grid-column>
+  <kendo-grid-column>
+    <ng-template kendoGridCellTemplate>
+        <button kendoGridEditCommand class="k-primary">Edit</button>
+        <button kendoGridRemoveCommand>Delete</button>
+    </ng-template>
+  </kendo-grid-column>
 </kendo-grid>
+
+<edit-item [model]="editDataItem" [isNew]="isNew"
+  (save)="saveItemHandler($event)"
+  (cancel)="cancelItemHandler()">
+</edit-item>
 </p>

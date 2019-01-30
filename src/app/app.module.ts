@@ -11,17 +11,33 @@ import { CategoriesService } from './service/northwind.service';
 import { GenericService } from './service/generic.service';
 import { Item } from './model/item';
 import { ItemService } from './service/item.service';
+import { EditItemComponent } from './edit-item/edit-item.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { LayoutModule } from '@progress/kendo-angular-layout';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { DropDownsModule, AutoCompleteModule } from '@progress/kendo-angular-dropdowns';
+
+
+ 
 @NgModule({
   declarations: [
     AppComponent,
-    ItemsComponent
+    ItemsComponent,
+    EditItemComponent
   ],
   imports: [
+    HttpClientModule,    
     BrowserModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     GridModule,
-    HttpClientModule
+    DialogModule,
+    LayoutModule, 
+    InputsModule,
+    DropDownsModule
+    
   ],
   providers: [CategoriesService,
               {
