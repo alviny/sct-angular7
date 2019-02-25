@@ -78,7 +78,7 @@ export abstract class GenericService extends BehaviorSubject<GridDataResult> {
             return this.updateItem(data);
         }
     }
-    public addItem(item:any){
+    public addItem(item:any) : Observable<any>{
         let bodyString = JSON.stringify(item);
         console.log("string:" + bodyString);
         let url = `${this.baseUrl}/${this.resourceName}`;    
