@@ -1,6 +1,7 @@
 <p>
   <kendo-grid
   [data]="view | async"
+  [height]="500"
   [loading]="view.loading"
   [pageSize]="state.take"
   [skip]="state.skip"
@@ -12,12 +13,15 @@
   (edit)="editItemHandler($event)" (remove)="removeItemHandler($event)"
   (add)="addItemHandler()"
 >
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand>Add new</button>
+  </ng-template>
   <kendo-grid-column field="summary" title="Summary" width="130"></kendo-grid-column>
   <kendo-grid-column field="description" title="Description" width="200"></kendo-grid-column>
   <kendo-grid-column field="price" title="Price" [sortable]="false"></kendo-grid-column>
   <kendo-grid-column>
     <ng-template kendoGridCellTemplate>
-        <button kendoGridEditCommand class="k-primary">Edit</button>
+        <button kendoGridEditCommand [primary]="true">Edit</button>
         <button kendoGridRemoveCommand>Delete</button>
     </ng-template>
   </kendo-grid-column>

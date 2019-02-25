@@ -11,12 +11,13 @@ import { stringify } from 'querystring';
 
 const httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/hal+json',
+      'Content-Type':  'application/json',
     })
 };
 
 export abstract class GenericService extends BehaviorSubject<GridDataResult> {
     public loading: boolean;
+
 
     constructor(private http: HttpClient,
                 protected baseUrl: string,
@@ -50,7 +51,9 @@ export abstract class GenericService extends BehaviorSubject<GridDataResult> {
     protected toParam(state:any):string{
         let queryParams = '';
         if( state !== undefined){
-           queryParams = `page=${state['skip']}&size=${state['take']}`;
+          let page = Math.floor(state.skip / state.take )
+           console.log("skip=" + state.skip + ", take=" + state.take + ", page=" + page);
+           queryParams = `page=${page}&size=${state['take']}`;
         }
         
         return queryParams;
@@ -76,7 +79,9 @@ export abstract class GenericService extends BehaviorSubject<GridDataResult> {
     }
     public addItem(item:any){
         let bodyString = JSON.stringify(item);
+        console.log("string:" + bodyString);
         let url = `${this.baseUrl}/${this.resourceName}`;    
+        console.log("adding" + url);
         this.http.post(url, bodyString,httpOptions )
                  .subscribe(() => console.log('added successfully.'));    
     }

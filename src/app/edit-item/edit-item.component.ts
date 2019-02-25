@@ -8,6 +8,7 @@ import { Item } from '../model/item'
 })
 export class EditItemComponent implements OnInit {
   public active = false;
+  public link :string = '';
   public editForm: FormGroup = new FormGroup({
     'itemNumber': new FormControl(),
     'summary': new FormControl('', Validators.required),
@@ -21,9 +22,17 @@ export class EditItemComponent implements OnInit {
   }
   @Input() public isNew = false;
   @Input() public set model(item : Item){
+
     this.editForm.reset(item);
+ 
 
     this.active = item !== undefined;
+    if (item !== undefined){
+      this.link = item['_links']['self']['href'];
+      console.log("set model : " + JSON.stringify(item));
+      console.log("link:" + this.link);
+    }
+
   }
 
   @Output() cancel: EventEmitter<any> = new EventEmitter();
@@ -31,7 +40,6 @@ export class EditItemComponent implements OnInit {
 
   public onSave(e):void{
     e.preventDefault();
-    console.log('form.value' + this.editForm.value.summary);
     this.save.emit(this.editForm.value);
     this.active = false;
   }
