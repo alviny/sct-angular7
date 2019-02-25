@@ -59,10 +59,18 @@ export class ItemsComponent implements OnInit {
   }
 
   public saveItemHandler(item: Item) {
-    this.service.save(item, this.isNew);
+    this.service.save(item, this.isNew).subscribe(
+      () => {
+        console.log("updated successfully!")
+        this.editDataItem = undefined;
+        this.service.query(this.state);
+      },
+      () => {
+        console.log("failed")
+      }
+    );
 
-    this.editDataItem = undefined;
-    this.service.query(this.state);
+    
   }
 
   public removeItemHandler({dataItem}) {

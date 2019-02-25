@@ -70,11 +70,12 @@ export abstract class GenericService extends BehaviorSubject<GridDataResult> {
         this.http.delete(url,httpOptions).subscribe(() => console.log('deleted successfully'),
                                                     () => console.log('Unable to delete item'));    
     } 
-    public save(data: any, isNew? : boolean){
+    public save(data: any, isNew? : boolean) : Observable<any>{
+ 
         if( isNew ){
-            this.addItem(data);
+            return this.addItem(data);
         }else{
-            this.updateItem(data);
+            return this.updateItem(data);
         }
     }
     public addItem(item:any){
@@ -82,15 +83,14 @@ export abstract class GenericService extends BehaviorSubject<GridDataResult> {
         console.log("string:" + bodyString);
         let url = `${this.baseUrl}/${this.resourceName}`;    
         console.log("adding" + url);
-        this.http.post(url, bodyString,httpOptions )
-                 .subscribe(() => console.log('added successfully.'));    
+        return this.http.post(url, bodyString,httpOptions ); 
     }
-    public updateItem(item:any){
+    public updateItem(item:any) : Observable<any> {
         let bodyString = JSON.stringify(item);
         console.log("string:" + bodyString);
         let url = `${this.baseUrl}/${this.resourceName}/${item.itemNumber}`;
         console.log("updating " + url);
-        this.http.put(url,bodyString,httpOptions )
-                 .subscribe( ()=> console.log('updated successfully'));
+        return this.http.put(url,bodyString,httpOptions );
+                 
     }
 }
